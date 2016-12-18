@@ -4,13 +4,13 @@ export default class extends React.Component{
   static propTypes = {
     cssClass:React.PropTypes.string,
     template:React.PropTypes.string,
-    startTime:React.PropTypes.number,
+    startToEndGap:React.PropTypes.number,
     onCounting:React.PropTypes.func,
     onComplete:React.PropTypes.func,
   };
 
   static defaultProps = {
-    startTime:60,
+    startToEndGap:60,
     interval:1000,
     onCounting:function(){},
     onComplete:function(){}
@@ -19,7 +19,7 @@ export default class extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      startTime:props.startTime,
+      startToEndGap:props.startToEndGap,
       onCounting:props.onCounting,
       onComplete:props.onComplete,
       interval:props.interval
@@ -37,13 +37,18 @@ export default class extends React.Component{
     }, this.state.interval);
   }
 
+  pause(){
+    clearInterval(this._timer);
+  }
+
   stop(){
+    this._couter = this.state.startToEndGap;
     clearInterval(this._timer);
   }
 
   reset(){
     this._timer = null;
-    this._couter = this.state.startTime;
+    this._couter = this.state.startToEndGap;
   }
 
   render(){

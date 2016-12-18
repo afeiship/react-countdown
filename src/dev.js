@@ -4,20 +4,18 @@ import ReactCoutdown from './main';
 
 class App extends React.Component{
   static defaultProps ={
-    startTime:20
+    startToEndGap:21
   }
   constructor(props){
   	super(props);
   	this.state = {
       time:0
     };
-
   }
+
   componentDidMount(){
     this._countdown = this.refs.countdown;
   }
-
-
 
   render(){
     return (
@@ -27,13 +25,22 @@ class App extends React.Component{
             this._countdown.reset();
             this._countdown.start();
           }} disabled={!!this.state.time} >
-          <ReactCoutdown ref="countdown" startTime={this.props.startTime}
+          <ReactCoutdown ref="countdown" startToEndGap={this.props.startToEndGap}
             onCounting={(time)=>{
               this.setState({time})
             }}>
             {this.state.time ? this.state.time +'s' : '点我发送验证码'}
           </ReactCoutdown>
         </button>
+
+
+        <button onClick={()=>{
+            this._countdown.pause();
+          }}>Pause</button>
+
+        <button onClick={()=>{
+            this._countdown.start();
+          }}>Start</button>
 
     </div>
     );
