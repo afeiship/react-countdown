@@ -1,2 +1,2 @@
-import ReactCoutdown from 'components/react-coutdown';
-export default ReactCoutdown;
+import ReactCountdown from 'components/react-countdown';
+export default ReactCountdown;

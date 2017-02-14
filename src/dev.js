@@ -1,5 +1,5 @@
 import './dev.scss';
-import ReactCoutdown from './main';
+import ReactCountdown from './main';
 
 
 class App extends React.Component{
@@ -25,12 +25,12 @@ class App extends React.Component{
             this._countdown.reset();
             this._countdown.start();
           }} disabled={!!this.state.time} >
-          <ReactCoutdown ref="countdown" startToEndGap={this.props.startToEndGap}
+          <ReactCountdown ref="countdown" startToEndGap={this.props.startToEndGap}
             onCounting={(time)=>{
               this.setState({time})
             }}>
             {this.state.time ? this.state.time +'s' : '点我发送验证码'}
-          </ReactCoutdown>
+          </ReactCountdown>
         </button>
 
 

@@ -1,5 +1,5 @@
 #react-coutdown
-> Cutdown component for react.
+> Countdown component for react.
 
 
 ## resource:
@@ -16,5 +16,5 @@
 
 ## usage:
 ```html
-<react-coutdown :visible="true" />
+<react-countdown :visible="true" />
 ```

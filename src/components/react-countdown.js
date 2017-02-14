@@ -53,7 +53,7 @@ export default class extends React.Component{
 
   render(){
     return (
-      <span className={classNames('react-coutdown',this.props.cssClass)}>
+      <span className={classNames('react-countdown',this.props.cssClass)}>
         {this.props.children}
       </span>
     );
