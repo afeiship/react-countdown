@@ -1,60 +1,67 @@
 import classNames from 'classnames';
+import noop from 'noop';
 
 export default class extends React.Component{
   static propTypes = {
-    cssClass:React.PropTypes.string,
-    template:React.PropTypes.string,
-    startToEndGap:React.PropTypes.number,
+    className:React.PropTypes.string,
+    interval:React.PropTypes.number,
+    time:React.PropTypes.number,
     onCounting:React.PropTypes.func,
     onComplete:React.PropTypes.func,
   };
 
   static defaultProps = {
-    startToEndGap:60,
+    className:'',
     interval:1000,
-    onCounting:function(){},
-    onComplete:function(){}
+    time:60,
+    onCounting:noop,
+    onComplete:noop
   };
 
   constructor(props) {
     super(props);
-    this.state = {
-      startToEndGap:props.startToEndGap,
-      onCounting:props.onCounting,
-      onComplete:props.onComplete,
-      interval:props.interval
-    };
+    const {interval,time,onCounting,onComplete} = props;
+    this.state = {interval,time,onCounting,onComplete};
   }
 
   start(){
+    let {onCounting,onComplete,interval,time} = this.state;
+    this.stop();
     this._timer = setInterval(() => {
-      if (!this._couter--) {
-        this.stop();
-        this.state.onComplete(this._couter);
-      } else {
-        this.state.onCounting(this._couter);
-      }
-    }, this.state.interval);
+      time--;
+      onCounting.call(this,time);
+      this.setState({time},()=>{
+        if(!time){
+          this.stop();
+          onComplete.call(this,time);
+        }
+      })
+    }, interval);
   }
 
   pause(){
-    clearInterval(this._timer);
+    this._timer && clearInterval(this._timer);
   }
 
   stop(){
-    this._couter = this.state.startToEndGap;
-    clearInterval(this._timer);
+    const {time} = this.props;
+    const {onCounting} = this.state;
+    this.setState({time});
+    this._timer && clearInterval(this._timer);
   }
 
-  reset(){
-    this._timer = null;
-    this._couter = this.state.startToEndGap;
+  componentWillUnmount(){
+    if(this._timer){
+      clearInterval(this._timer);
+      this._timer = null;
+    }
   }
 
   render(){
+    const {className,children} = this.props;
     return (
-      <span className={classNames('react-countdown',this.props.cssClass)}>
-        {this.props.children}
+      <span className={classNames('react-countdown',className)}>
+        {children}
       </span>
     );
   }

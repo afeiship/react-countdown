@@ -3,9 +3,6 @@ import ReactCountdown from './main';
 
 
 class App extends React.Component{
-  static defaultProps ={
-    startToEndGap:21
-  }
   constructor(props){
   	super(props);
   	this.state = {
@@ -22,10 +19,10 @@ class App extends React.Component{
       <div className="hello-react-coutdown">
 
         <button  onClick={()=>{
-            this._countdown.reset();
+            //this._countdown.reset();
             this._countdown.start();
           }} disabled={!!this.state.time} >
-          <ReactCountdown ref="countdown" startToEndGap={this.props.startToEndGap}
+          <ReactCountdown ref="countdown" time={10}
             onCounting={(time)=>{
               this.setState({time})
             }}>
@@ -41,6 +38,11 @@ class App extends React.Component{
         <button onClick={()=>{
             this._countdown.start();
           }}>Start</button>
+
+        <button onClick={()=>{
+            this._countdown.stop();
+            this.setState({time:0})
+          }}>Stop</button>
 
     </div>
     );
