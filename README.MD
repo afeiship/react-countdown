@@ -1,4 +1,4 @@
-#react-coutdown
+# react-coutdown
 > Countdown component for react.
 
 
@@ -8,13 +8,25 @@
 + https://yarnpkg.com/en/docs/install
 
 
-## props:
-| name | type | value | description |
-| :----| :----| :----| :----|
-| visible  | Boolean | true/false | v-show |
+## size:
++ 4.0K	react-coutdown.js
 
+## props:
+```javascript
+    className:React.PropTypes.string,
+    interval:React.PropTypes.number,
+    time:React.PropTypes.number,
+    hidden:React.PropTypes.bool,
+    onCounting:React.PropTypes.func,
+    onComplete:React.PropTypes.func,
+```
 
 ## usage:
 ```html
-<react-countdown :visible="true" />
+  <ReactCountdown ref="countdown" time={10}
+    onCounting={(time)=>{
+      this.setState({time})
+    }}>
+    {this.state.time ? this.state.time +'s' : '点我发送验证码'}
+  </ReactCountdown>
 ```
