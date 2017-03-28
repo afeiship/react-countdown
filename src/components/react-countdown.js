@@ -1,3 +1,4 @@
+import React from 'react';
 import classNames from 'classnames';
 import noop from 'noop';
 
@@ -6,6 +7,7 @@ export default class extends React.Component{
     className:React.PropTypes.string,
     interval:React.PropTypes.number,
     time:React.PropTypes.number,
+    hidden:React.PropTypes.bool,
     onCounting:React.PropTypes.func,
     onComplete:React.PropTypes.func,
   };
@@ -14,6 +16,7 @@ export default class extends React.Component{
     className:'',
     interval:1000,
     time:60,
+    hidden:false,
     onCounting:noop,
     onComplete:noop
   };
@@ -22,6 +25,15 @@ export default class extends React.Component{
     super(props);
     const {interval,time,onCounting,onComplete} = props;
     this.state = {interval,time,onCounting,onComplete};
+  }
+
+  static format(inTime){
+    const seconds = parseInt(inTime % 60, 10);
+    const minutes = parseInt(inTime / 60, 10) % 60;
+    const hours = parseInt(inTime / 3600, 10);
+    return {
+      hours,minutes,seconds
+    };
   }
 
   start(){
@@ -58,9 +70,9 @@ export default class extends React.Component{
   }
 
   render(){
-    const {className,children} = this.props;
+    const {className,children,hidden} = this.props;
     return (
-      <span className={classNames('react-countdown',className)}>
+      <span hidden={hidden} className={classNames('react-countdown',className)}>
         {children}
       </span>
     );
