@@ -11,7 +11,7 @@
 ## size:
 + 4.0K	react-coutdown.js
 
-## props:
+## properties:
 | name && props |
 | :----|
 | className:React.PropTypes.string |
@@ -21,7 +21,24 @@
 | onCounting:React.PropTypes.func |
 | onComplete:React.PropTypes.func |
 
-
+## methods:
++ static methods:
+```javascript
+  static format(inTime){
+    return {
+      hours,minutes,seconds
+    };
+  }
+```
++ instance methods:
+```javascript
+  start(){
+  }
+  stop(){
+  }
+  pause(){
+  }
+```
 
 ## usage:
 ```html
