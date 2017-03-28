@@ -12,14 +12,16 @@
 + 4.0K	react-coutdown.js
 
 ## props:
-```javascript
-    className:React.PropTypes.string,
-    interval:React.PropTypes.number,
-    time:React.PropTypes.number,
-    hidden:React.PropTypes.bool,
-    onCounting:React.PropTypes.func,
-    onComplete:React.PropTypes.func,
-```
+| name && props |
+| :----|
+| className:React.PropTypes.string |
+| interval:React.PropTypes.number |
+| time:React.PropTypes.number |
+| hidden:React.PropTypes.bool |
+| onCounting:React.PropTypes.func |
+| onComplete:React.PropTypes.func |
+
+
 
 ## usage:
 ```html
