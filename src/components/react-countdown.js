@@ -13,7 +13,6 @@ export default class extends React.Component{
   };
 
   static defaultProps = {
-    className:'',
     interval:1000,
     time:60,
     hidden:false,
@@ -23,8 +22,15 @@ export default class extends React.Component{
 
   constructor(props) {
     super(props);
-    const {interval,time,onCounting,onComplete} = props;
-    this.state = {interval,time,onCounting,onComplete};
+    this.state = {...props};
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.time !== this.props.time){
+      this.setState({time:nextProps.time},()=>{
+        this.start();
+      });
+    }
   }
 
   static format(inTime){
@@ -57,7 +63,6 @@ export default class extends React.Component{
 
   stop(){
     const {time} = this.props;
-    const {onCounting} = this.state;
     this.setState({time});
     this._timer && clearInterval(this._timer);
   }
@@ -70,9 +75,9 @@ export default class extends React.Component{
   }
 
   render(){
-    const {className,children,hidden} = this.props;
+    const {className,children,interval,time,onComplete,onCounting,...props} = this.props;
     return (
-      <span hidden={hidden} className={classNames('react-countdown',className)}>
+      <span {...props} className={classNames('react-countdown',className)}>
         {children}
       </span>
     );

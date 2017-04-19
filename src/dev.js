@@ -19,6 +19,9 @@ class App extends React.Component{
   }
 
   _click2(){
+    const dynamicTime = Math.floor(Math.random()*100);
+    this.setState({dynamicTime});
+    console.log('dynamicTime:',dynamicTime);
     this.refs.ct2.start();
   }
 
@@ -39,7 +42,7 @@ class App extends React.Component{
         <button onClick={this._click2.bind(this)}>可以开始倒计时啦！</button>
         <ReactCountdown hidden={this.state.hidden2} onComplete={()=>{
             this.setState({hidden2:true})
-          }} ref="ct2" time={5}
+          }} ref="ct2" time={this.state.dynamicTime}
             onCounting={(time2)=>{
               console.log(time2)
               this.setState({time2})
