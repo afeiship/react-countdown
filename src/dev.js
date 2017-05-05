@@ -22,7 +22,6 @@ class App extends React.Component{
     const dynamicTime = Math.floor(Math.random()*100);
     this.setState({dynamicTime});
     console.log('dynamicTime:',dynamicTime);
-    this.refs.ct2.start();
   }
 
   getFormatedData(){
