@@ -1,15 +1,16 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 import noop from 'noop';
 
 export default class extends React.Component{
   static propTypes = {
-    className:React.PropTypes.string,
-    interval:React.PropTypes.number,
-    time:React.PropTypes.number,
-    hidden:React.PropTypes.bool,
-    onCounting:React.PropTypes.func,
-    onComplete:React.PropTypes.func,
+    className:PropTypes.string,
+    interval:PropTypes.number,
+    time:PropTypes.number,
+    hidden:PropTypes.bool,
+    onCounting:PropTypes.func,
+    onComplete:PropTypes.func,
   };
 
   static defaultProps = {
@@ -22,7 +23,9 @@ export default class extends React.Component{
 
   constructor(props) {
     super(props);
-    this.state = {...props};
+    this.state = {
+      time:props.time
+    };
   }
 
   componentWillReceiveProps(nextProps){
@@ -43,8 +46,11 @@ export default class extends React.Component{
   }
 
   start(){
-    let {onCounting,onComplete,interval,time} = this.state;
+    const {onCounting,onComplete,interval} = this.props;
+    let {time} = this.state;
     this.stop();
+
+    onCounting.call(this,time);
     this._timer = setInterval(() => {
       time--;
       onCounting.call(this,time);
@@ -75,11 +81,9 @@ export default class extends React.Component{
   }
 
   render(){
-    const {className,children,interval,time,onComplete,onCounting,...props} = this.props;
+    const {className,interval,time,onComplete,onCounting,...props} = this.props;
     return (
-      <span {...props} className={classNames('react-countdown',className)}>
-        {children}
-      </span>
+      <span {...props} className={classNames('react-countdown',className)} />
     );
   }
 }

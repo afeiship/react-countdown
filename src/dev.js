@@ -1,4 +1,5 @@
 import './dev.scss';
+
 import ReactCountdown from './main';
 import dateFormat from 'dateformat';
 
@@ -12,6 +13,8 @@ class App extends React.Component{
       time2:5,
       hidden2:false,
     };
+
+    window.ds = this;
   }
 
   componentDidMount(){
@@ -40,7 +43,7 @@ class App extends React.Component{
       <div className="hello-react-coutdown">
         <button onClick={this._click2.bind(this)}>可以开始倒计时啦！</button>
         <ReactCountdown hidden={this.state.hidden2} onComplete={()=>{
-            this.setState({hidden2:true})
+            // this.setState({hidden2:true})
           }} ref="ct2" time={this.state.dynamicTime}
             onCounting={(time2)=>{
               console.log(time2)
