@@ -60,6 +60,7 @@
     "isparta-loader": "^2.0.0",
     "json-loader": "^0.5.4",
     "lolex": "^1.4.0",
+    "next-timeleft": "github:afeiship/next-timeleft",
     "node-sass": "^3.13.0",
     "opn": "^4.0.2",
     "ora": "^0.3.0",

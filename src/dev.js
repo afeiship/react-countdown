@@ -2,6 +2,7 @@ import './dev.scss';
 
 import ReactCountdown from './main';
 import dateFormat from 'dateformat';
+import 'next-timeleft';
 
 let nowDate = Date.now();
 
@@ -29,11 +30,11 @@ class App extends React.Component{
 
   getFormatedData(){
     const time = this.state.time2;
-    const {hours,minutes,seconds} = ReactCountdown.format(time);
+    const {hour,minute,second} = nx.timeleft(time * 1000);
 
     return (
       <div className="timeaser">
-        {`${hours}小时${minutes}分${seconds}秒`}
+        {`${hour}小时${minute}分${second}秒`}
       </div>
     )
   }
