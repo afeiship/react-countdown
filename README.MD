@@ -1,6 +1,10 @@
 # react-coutdown
 > Countdown component for react.
 
+## todos:
++ [ ] time/onCounting -> value/onChange
++ [ ] onComplete -> onEnd
++ [ ] start/pause/stop -> state
 
 ## resource:
 + http://www.cnblogs.com/Kummy/p/4966937.html
