@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import noop from 'noop';
 
-// 'start', 'pause', 'stop'
+// 'start', 'pause', 'stop', 'counting'
 
 export default class extends Component {
   static propTypes = {
