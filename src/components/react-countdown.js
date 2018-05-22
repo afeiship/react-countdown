@@ -1,32 +1,57 @@
-import React,{ Component } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'noop';
 import objectAssign from 'object-assign';
+import 'next-interval';
+import Actions from './actions';
 
-export default class extends Component{
+@mixin([Actions])
+export default class extends Component {
   /*===properties start===*/
   static propTypes = {
     className: PropTypes.string,
     value: PropTypes.number,
+    onChange: PropTypes.func,
+    interval: PropTypes.number,
+    status: PropTypes.string,
   };
 
   static defaultProps = {
+    value: 5,
+    interval: 1000,
+    status: 'stop',
+    onChange: noop,
   };
   /*===properties end===*/
 
-  constructor(inProps) {
-    super(inProps);
-    this.state = {
-      value: inProps.value
-    };
+  componentDidMount() {
+    const { status } = this.props;
+    this[status]();
   }
 
-  render(){
-    const { className, ...props } = this.props;
+  componentWillReceiveProps(inProps) {
+    const { status } = inProps;
+    this[status]();
+  }
+
+  render() {
+    const {
+      className,
+      interval,
+      value,
+      onChange,
+      status,
+      ...props
+    } = this.props;
+
     return (
-      <span {...props} className={classNames('react-countdown',className)} />
+      <span
+        data-status={status}
+        data-value={value}
+        className={classNames('react-countdown', className)}
+        {...props} />
     );
   }
 }
