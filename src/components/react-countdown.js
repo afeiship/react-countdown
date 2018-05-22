@@ -8,7 +8,8 @@ import objectAssign from 'object-assign';
 export default class extends Component{
   /*===properties start===*/
   static propTypes = {
-    className: PropTypes.string
+    className: PropTypes.string,
+    value: PropTypes.number,
   };
 
   static defaultProps = {
@@ -18,13 +19,14 @@ export default class extends Component{
   constructor(inProps) {
     super(inProps);
     this.state = {
+      value: inProps.value
     };
   }
 
   render(){
     const { className, ...props } = this.props;
     return (
-      <div {...props} className={classNames('react-countdown',className)} />
+      <span {...props} className={classNames('react-countdown',className)} />
     );
   }
 }
