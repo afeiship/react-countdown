@@ -23,6 +23,7 @@ class App extends React.Component {
   }
 
   _onChange = e => {
+    console.log('on change:->',e.target.value);
     this.setState({ value: e.target.value });
   };
 
