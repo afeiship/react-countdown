@@ -1,89 +1,32 @@
 import './dev.scss';
-
 import ReactCountdown from './main';
-import dateFormat from 'dateformat';
-import 'next-timeleft';
 
-let nowDate = Date.now();
+/*===example start===*/
+
+// install: npm install afeiship/react-countdown --save
+// import : import ReactCountdown from 'react-countdown'
 
 class App extends React.Component{
+  state = {
+
+  };
+
   constructor(props){
-  	super(props);
-  	this.state = {
-      time:0,
-      time2:5,
-      hidden2:false,
-    };
-
-    window.ds = this;
-  }
-
-  componentDidMount(){
-    this._countdown = this.refs.countdown;
-  }
-
-  _click2(){
-    const dynamicTime = Math.floor(Math.random()*100);
-    this.setState({dynamicTime});
-    console.log('dynamicTime:',dynamicTime);
-  }
-
-  getFormatedData(){
-    const time = this.state.time2;
-    const {hour,minute,second} = nx.timeleft(time * 1000);
-
-    return (
-      <div className="timeaser">
-        {`${hour}小时${minute}分${second}秒`}
-      </div>
-    )
+    super(props);
+    window.demo = this;
+    window.refs = this.refs;
+    window.rc = this.refs.rc;
   }
 
   render(){
     return (
-      <div className="hello-react-coutdown">
-        <button onClick={this._click2.bind(this)}>可以开始倒计时啦！</button>
-        <ReactCountdown hidden={this.state.hidden2} onComplete={()=>{
-            // this.setState({hidden2:true})
-          }} ref="ct2" time={this.state.dynamicTime}
-            onCounting={(time2)=>{
-              console.log(time2)
-              this.setState({time2})
-            }}>
-            {this.state.time2 && this.getFormatedData()}
-        </ReactCountdown>
-
-        <button  onClick={()=>{
-            //this._countdown.reset();
-            this._countdown.start();
-          }} disabled={!!this.state.time} >
-          <ReactCountdown ref="countdown" time={10}
-            onCounting={(time)=>{
-              this.setState({time})
-            }}>
-            {this.state.time ? this.state.time +'s' : '点我发送验证码'}
-          </ReactCountdown>
-        </button>
-
-
-        <button onClick={()=>{
-            this._countdown.pause();
-          }}>Pause</button>
-
-        <button onClick={()=>{
-            this._countdown.start();
-          }}>Start</button>
-
-        <button onClick={()=>{
-            this._countdown.stop();
-            this.setState({time:0})
-          }}>Stop</button>
-
-    </div>
+      <div className="hello-react-countdown">
+        <ReactCountdown ref='rc' />
+      </div>
     );
   }
 }
-
+/*===example end===*/
 
 ReactDOM.render(
     <App />,

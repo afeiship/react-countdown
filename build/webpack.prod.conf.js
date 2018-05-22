@@ -9,8 +9,8 @@ base.entry = {
 base.output = {
   path: config.build.assetsRoot,
   publicPath: config.build.assetsPublicPath,
-  filename: 'react-coutdown.js',
-  library: 'ReactCoutdown',
+  filename: 'react-countdown.js',
+  library: 'ReactCountdown',
   libraryTarget: 'umd'
 }
 
