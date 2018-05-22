@@ -13,8 +13,11 @@ export default class {
   count() {
     const { onChange } = this.props;
     const value = this.props.value - 1;
-    value === 0 && this.stop();
-    onChange({ target: { value } });
+    if (value >= 0) {
+      onChange({ target: { value } });
+    } else {
+      this.stop();
+    }
   }
 
   destroy() {
