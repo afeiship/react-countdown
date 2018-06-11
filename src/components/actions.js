@@ -1,3 +1,5 @@
+import nxInterval from 'next-interval';
+
 export default class {
   stop() {
     this.destroy();
@@ -5,7 +7,7 @@ export default class {
 
   start() {
     this.destroy();
-    this._interval = nx.interval(() => {
+    this._interval = nxInterval(() => {
       this.count();
     }, this.props.interval);
   }

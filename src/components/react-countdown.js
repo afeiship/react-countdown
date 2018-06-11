@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'noop';
 import objectAssign from 'object-assign';
-import 'next-interval';
 import Actions from './actions';
 
 @mixin([Actions])
