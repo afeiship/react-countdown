@@ -36,6 +36,10 @@ export default class extends Component {
     this[status]();
   }
 
+  componentWillUnmount(){
+    this.stop();
+  }
+
   render() {
     const {
       className,
