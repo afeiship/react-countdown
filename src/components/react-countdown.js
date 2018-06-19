@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { createElement,Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -13,6 +13,7 @@ export default class extends Component {
     className: PropTypes.string,
     value: PropTypes.number,
     onChange: PropTypes.func,
+    nodeName: PropTypes.any,
     interval: PropTypes.number,
     status: PropTypes.string,
   };
@@ -21,6 +22,7 @@ export default class extends Component {
     value: 5,
     interval: 1000,
     status: 'stop',
+    nodeName: 'span',
     onChange: noop,
   };
   /*===properties end===*/
@@ -35,26 +37,14 @@ export default class extends Component {
     this[status]();
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.stop();
   }
 
   render() {
-    const {
-      className,
-      interval,
-      value,
-      onChange,
-      status,
-      ...props
-    } = this.props;
-
-    return (
-      <span
-        data-status={status}
-        data-value={value}
-        className={classNames('react-countdown', className)}
-        {...props} />
-    );
+    const { interval, value, onChange, status, nodeName, ...props } = this.props;
+    return createElement(nodeName, {
+      ...props,
+    });
   }
 }
