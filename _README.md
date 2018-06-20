@@ -28,3 +28,6 @@ $react-countdown-options:(
 ```jsx
 BACKUP_USAGE
 ```
+
+## todo:
++ status => start/stop [ to boolean? ]

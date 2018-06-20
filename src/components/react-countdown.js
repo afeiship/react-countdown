@@ -1,16 +1,11 @@
 import React, { createElement,Component } from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import noop from 'noop';
-import objectAssign from 'object-assign';
-import Actions from './actions';
+import nxInterval from 'next-interval';
 
-@mixin([Actions])
 export default class extends Component {
   /*===properties start===*/
   static propTypes = {
-    className: PropTypes.string,
     value: PropTypes.number,
     onChange: PropTypes.func,
     nodeName: PropTypes.any,
@@ -26,6 +21,34 @@ export default class extends Component {
     onChange: noop,
   };
   /*===properties end===*/
+
+
+  /*===actions start===*/
+  stop() {
+    this.destroy();
+  }
+
+  start() {
+    this.destroy();
+    this._interval = nxInterval(() => {
+      this.count();
+    }, this.props.interval);
+  }
+
+  count() {
+    const { onChange } = this.props;
+    const value = this.props.value - 1;
+    if (value >= 0) {
+      onChange({ target: { value } });
+    } else {
+      this.stop();
+    }
+  }
+
+  destroy() {
+    this._interval && this._interval.destroy();
+  }
+  /*===actions end===*/
 
   componentDidMount() {
     const { status } = this.props;
