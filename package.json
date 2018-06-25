@@ -88,8 +88,6 @@
     "next-interval": "github:afeiship/next-interval",
     "noop": "github:afeiship/noop",
     "object-assign": "*",
-    "prop-types": "*",
-    "react": "*",
-    "react-dom": "*"
+    "prop-types": "*"
   }
 }
