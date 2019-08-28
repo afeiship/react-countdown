@@ -13,7 +13,7 @@ body,
 
 .app-container {
   padding: 50px;
-  .button {
+  button {
     background: #3cc51f;
     width: 100%;
     display: block;
@@ -29,6 +29,10 @@ body,
 
     &:focus {
       outline: none;
+    }
+
+    &[disabled]{
+      background: #ccc;
     }
   }
 }

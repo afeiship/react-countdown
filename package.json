@@ -59,10 +59,12 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
+    "next-fsm": "github:afeiship/next-fsm",
     "node-sass": "^4.12.0",
     "noop": "github:afeiship/noop",
     "prop-types": "^15.7.2",
     "react": "^16.8.5",
-    "react-dom": "^16.8.5"
+    "react-dom": "^16.8.5",
+    "react-status-manager": "github:afeiship/react-status-manager"
   }
 }

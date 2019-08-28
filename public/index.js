@@ -8,7 +8,13 @@ class App extends React.Component {
   render() {
     return (
       <div className="app-container">
-        <ReactCountdown />
+        <ReactCountdown
+          onChange={(e) => {
+            const { status, value } = e.target;
+            console.log('status,value:->', status, value);
+          }}
+          status="count"
+        />
       </div>
     );
   }
