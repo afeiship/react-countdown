@@ -1,96 +1,50 @@
 # react-countdown
-> Countdown component for react
+> Countdown component for react.
 
-## properties:
-```javascript
+## install
+```shell
+npm install -S afeiship/react-countdown
+```
 
-  static propTypes = {
-    className: PropTypes.string,
-    value: PropTypes.number,
-    onChange: PropTypes.func,
-    interval: PropTypes.number,
-    status: PropTypes.string,
-  };
+## usage
+1. import css
+  ```scss
+  @import "~react-countdown/style.scss";
 
-  static defaultProps = {
-    value: 5,
-    interval: 1000,
-    status: 'stop',
-    onChange: noop,
-  };
+  // customize your styles:
+  $react-countdown-options: ()
+  ```
+2. import js
+  ```js
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+  import ReactCountdown from 'react-countdown';
   
-```
-
-## install && import:
-```bash
-npm install --save afeiship/react-countdown --registry=https://registry.npm.taobao.org
-```
-
-```js
-import ReactCountdown from 'react-countdown';
-```
-
-```scss
-// customize your styles:
-$react-countdown-options:(
-);
-
-@import 'node_modules/react-countdown/dist/style.scss';
-```
-
-
-## usage:
-```jsx
-
-// install: npm install afeiship/react-countdown --save
-// import : import ReactCountdown from 'react-countdown'
-
-class App extends React.Component {
-  state = {
-    value: 10,
-    status: 'stop'
-  };
-
-  constructor(props) {
-    super(props);
-    window.demo = this;
+  // your app:
+  class App extends React.Component{
+    render(){
+      return (
+        <ReactCountdown />
+      )
+    }
   }
 
-  componentDidMount() {
-    const { rc } = this.refs;
-    window.rc = rc;
-  }
+  // render to dom:
+  ReactDOM.render(<App/>, document.getElementById('app'));
+  ```
 
-  _onChange = e => {
-    console.log('on change:->',e.target.value);
-    this.setState({ value: e.target.value });
-  };
+## documentation
+- https://afeiship.github.io/react-countdown/
 
-  _onChangeValue = e => {
-    this.setState({ value: Math.random() * 100 | 0 })
-  };
+## resouces
+- https://www.robinwieruch.de/minimal-react-webpack-babel-setup/
+- https://www.valentinog.com/blog/react-webpack-babel/
+- https://jestjs.io/docs/en/tutorial-react#snapshot-testing-with-mocks-enzyme-and-react-16
+- https://testing-library.com/docs/react-testing-library/api
 
-  _onChangeStatus = status => {
-    this.setState({ status })
-  };
-
-  render() {
-    const { value, status } = this.state;
-    return (
-      <div className="hello-react-countdown">
-        <button onClick={this._onChangeValue}>ChangeRandomValue : {this.state.value} </button>
-        <button onClick={this._onChangeStatus.bind(this, 'start')}>Status:Start</button>
-        <button onClick={this._onChangeStatus.bind(this, 'stop')}>Status:Stop</button>
-        <ReactCountdown
-          status={status}
-          value={value}
-          onChange={this._onChange}
-          ref='rc'>
-          {value ? value + 's' : '重新发送'}
-        </ReactCountdown>
-      </div>
-    );
-  }
-}
-
-```
+## todos
+- [ ] Add: semver number for every build files.
+- [ ] Add: need output css files.
+- [ ] Add: PWA support for docs.
+- [ ] Add: source.map file for dist(`you can upload for production debug`).
+- [ ] BUG: npm run dev will clean dist.
