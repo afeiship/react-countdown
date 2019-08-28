@@ -22,7 +22,7 @@ export default class extends Component {
 
   static defaultProps = {
     status: 'init',
-    start: 10,
+    start: 5,
     end: 1,
     step: -1,
     interval: 1000,
@@ -30,9 +30,23 @@ export default class extends Component {
   };
   /*===properties end===*/
 
+  get value() {
+    return this.state.value;
+  }
+
   constructor(inProps) {
     super(inProps);
     this.state = { value: inProps.start };
+  }
+
+  componentWillReceiveProps(inNextProps) {
+    const { status } = inNextProps;
+    const _status = this.props.status;
+    const start = this.props.start;
+    if (status !== _status) {
+      console.log('stats receive props:->', status);
+      this[status]();
+    }
   }
 
   componentDidMount() {
@@ -45,10 +59,26 @@ export default class extends Component {
     this.change(start, 'init');
   }
 
+  pause() {
+    this.setState({ status: 'paused' });
+  }
+
+  restart() {
+    const { interval, step, end } = this.props;
+    clearInterval(this.timer);
+    if (this.value === end) {
+      this.init();
+    }
+  }
+
   count() {
     const { interval, step, end } = this.props;
+    const { status } = this.state;
+    const isPaused = status === 'paused';
+    this.restart();
     this.timer = setInterval(() => {
-      const { value } = this.state;
+      if (isPaused) return;
+      const value = this.value;
       const _value = value + step;
       if (value === end) {
         this.done();
@@ -85,6 +115,10 @@ export default class extends Component {
       ...props
     } = this.props;
     const { value } = this.state;
-    return <Fragment {...props}>{value}</Fragment>;
+    return (
+      <span className={classNames(CLASS_NAME, className)} {...props}>
+        {value}
+      </span>
+    );
   }
 }

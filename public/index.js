@@ -4,17 +4,30 @@ import React from 'react';
 import './assets/style.scss';
 
 class App extends React.Component {
-  componentDidMount() {}
+  state = {
+    status: 'init'
+  };
+
   render() {
+    const { status } = this.state;
     return (
       <div className="app-container">
         <ReactCountdown
           onChange={(e) => {
             const { status, value } = e.target;
+            this.setState({ status });
             console.log('status,value:->', status, value);
           }}
-          status="count"
+          status={status}
         />
+        <button
+          disabled={status === 'count'}
+          onClick={() => {
+            this.setState({ status: 'count' });
+          }}>
+          START!
+        </button>
+        <p className="mod-label">status: {status}</p>
       </div>
     );
   }

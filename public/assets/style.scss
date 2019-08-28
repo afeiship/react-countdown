@@ -4,18 +4,25 @@
 }
 html,
 body,
-#app,
-.app-container {
+#app {
   height: 100%;
 }
 
 @import "@/components/style.scss";
 
 .app-container {
+  text-align: center;
   padding: 50px;
+  font-family: PingFangSC;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 37.5%;
+  font-size: 280px;
   button {
     background: #3cc51f;
-    width: 100%;
+    width: 200px;
+    margin: 20px auto;
     display: block;
     margin-bottom: 10px;
     border-radius: 10px;
@@ -31,8 +38,13 @@ body,
       outline: none;
     }
 
-    &[disabled]{
+    &[disabled] {
       background: #ccc;
     }
+  }
+
+  .mod-label {
+    font-size: 30px;
+    color: salmon;
   }
 }
