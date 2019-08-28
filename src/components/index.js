@@ -6,13 +6,14 @@ import noop from 'noop';
 import objectAssign from 'object-assign';
 
 const CLASS_NAME = 'react-countdown';
+const STATUS_LIST = ['init', 'pause', 'count', 'done'];
 
 export default class extends Component {
   static displayName = CLASS_NAME;
   /*===properties start===*/
   static propTypes = {
     className: PropTypes.string,
-    status: PropTypes.oneOf(['init', 'pause', 'count', 'done']),
+    status: PropTypes.oneOf(STATUS_LIST),
     start: PropTypes.number,
     end: PropTypes.number,
     step: PropTypes.number,
@@ -72,7 +73,7 @@ export default class extends Component {
     this.setState({ status: 'pause' });
   }
 
-  restart() {
+  reset() {
     clearInterval(this.timer);
     if (this.value === this.boundary) {
       this.init();
@@ -81,7 +82,7 @@ export default class extends Component {
 
   count() {
     const { interval } = this.props;
-    this.restart();
+    this.reset();
     this.timer = setInterval(this.countdown, interval);
   }
 
