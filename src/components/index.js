@@ -34,17 +34,21 @@ export default class extends Component {
     return this.state.value;
   }
 
+  get paused() {
+    const { status } = this.state;
+    return status === 'paused';
+  }
+
   constructor(inProps) {
     super(inProps);
     this.state = { value: inProps.start };
+    this.countdown = this.countdown.bind(this);
   }
 
   componentWillReceiveProps(inNextProps) {
     const { status } = inNextProps;
     const _status = this.props.status;
-    const start = this.props.start;
     if (status !== _status) {
-      console.log('stats receive props:->', status);
       this[status]();
     }
   }
@@ -64,7 +68,7 @@ export default class extends Component {
   }
 
   restart() {
-    const { interval, step, end } = this.props;
+    const { end } = this.props;
     clearInterval(this.timer);
     if (this.value === end) {
       this.init();
@@ -74,22 +78,25 @@ export default class extends Component {
   count() {
     const { interval, step, end } = this.props;
     const { status } = this.state;
-    const isPaused = status === 'paused';
     this.restart();
-    this.timer = setInterval(() => {
-      if (isPaused) return;
-      const value = this.value;
-      const _value = value + step;
-      if (value === end) {
-        this.done();
-      } else {
-        this.change(_value, 'count');
-      }
-    }, interval);
+    this.timer = setInterval(this.countdown, interval);
+  }
+
+  countdown() {
+    const { step, end } = this.props;
+    if (this.paused) return;
+    const value = this.value;
+    const _value = value + step;
+    if (value === end) {
+      this.done();
+    } else {
+      this.change(_value, 'count');
+    }
   }
 
   done() {
-    const { end } = this.props;
+    const { step, end } = this.props;
+    const value = end + step;
     clearInterval(this.timer);
     this.change(end, 'done');
   }

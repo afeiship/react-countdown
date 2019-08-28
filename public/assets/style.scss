@@ -12,8 +12,8 @@ body,
 
 .app-container {
   text-align: center;
-  padding: 50px;
   font-family: PingFangSC;
+  width: 100%;
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
@@ -44,7 +44,15 @@ body,
   }
 
   .mod-label {
-    font-size: 30px;
-    color: salmon;
+    font-size: 100px;
+    color: #999;
+    position: absolute;
+    background: #3cc51f;
+    color:#fff;
+    display: block;
+    padding: 0 20px;
+    top: -120px;
+    right: -20px;
+    border-radius: 10px 0 0 10px;
   }
 }

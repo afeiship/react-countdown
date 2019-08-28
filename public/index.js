@@ -27,7 +27,7 @@ class App extends React.Component {
           }}>
           START!
         </button>
-        <p className="mod-label">status: {status}</p>
+        <p className="mod-label">{status}</p>
       </div>
     );
   }
