@@ -12,6 +12,7 @@ class App extends React.Component {
     const { status } = this.state;
     return (
       <div className="app-container">
+        <p className="mod-label">{status}</p>
         <ReactCountdown
           onChange={(e) => {
             const { status, value } = e.target;
@@ -33,7 +34,6 @@ class App extends React.Component {
           }}>
           Pause!
         </button>
-        <p className="mod-label">{status}</p>
       </div>
     );
   }
