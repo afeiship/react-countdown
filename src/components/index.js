@@ -12,7 +12,7 @@ export default class extends Component {
   /*===properties start===*/
   static propTypes = {
     className: PropTypes.string,
-    status: PropTypes.string,
+    status: PropTypes.oneOf(['init', 'pause', 'count', 'done']),
     start: PropTypes.number,
     end: PropTypes.number,
     step: PropTypes.number,
@@ -34,9 +34,14 @@ export default class extends Component {
     return this.state.value;
   }
 
+  get boundary() {
+    const { step, end } = this.props;
+    return step + end;
+  }
+
   get paused() {
-    const { status } = this.state;
-    return status === 'paused';
+    const { status } = this.props;
+    return status === 'pause';
   }
 
   constructor(inProps) {
@@ -64,20 +69,18 @@ export default class extends Component {
   }
 
   pause() {
-    this.setState({ status: 'paused' });
+    this.setState({ status: 'pause' });
   }
 
   restart() {
-    const { end } = this.props;
     clearInterval(this.timer);
-    if (this.value === end) {
+    if (this.value === this.boundary) {
       this.init();
     }
   }
 
   count() {
-    const { interval, step, end } = this.props;
-    const { status } = this.state;
+    const { interval } = this.props;
     this.restart();
     this.timer = setInterval(this.countdown, interval);
   }
@@ -95,10 +98,8 @@ export default class extends Component {
   }
 
   done() {
-    const { step, end } = this.props;
-    const value = end + step;
     clearInterval(this.timer);
-    this.change(end, 'done');
+    this.change(this.boundary, 'done');
   }
 
   change(inValue, inStatus) {

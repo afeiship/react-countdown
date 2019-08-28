@@ -27,6 +27,12 @@ class App extends React.Component {
           }}>
           START!
         </button>
+        <button
+          onClick={() => {
+            this.setState({ status: 'pause' });
+          }}>
+          Pause!
+        </button>
         <p className="mod-label">{status}</p>
       </div>
     );
