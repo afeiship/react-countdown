@@ -4,17 +4,11 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'noop';
 import objectAssign from 'object-assign';
-import NxFsm from 'next-fsm';
-import RSM from 'react-status-manager';
 
 const CLASS_NAME = 'react-countdown';
-const STATUS = {
-  INIT: 0,
-  COUNT: 1,
-  DONE: 2
-};
 
 export default class extends Component {
+  static displayName = CLASS_NAME;
   /*===properties start===*/
   static propTypes = {
     className: PropTypes.string,
@@ -47,37 +41,36 @@ export default class extends Component {
   }
 
   init() {
-    const { start, onChange } = this.props;
-    this.setState({ value: start }, () => {
-      onChange({
-        target: {
-          value: start,
-          status: 'init'
-        }
-      });
-    });
+    const { start } = this.props;
+    this.change(start, 'init');
   }
 
   count() {
-    const { interval, step, end, onChange } = this.props;
+    const { interval, step, end } = this.props;
     this.timer = setInterval(() => {
       const { value } = this.state;
-      const target = { value: value + step };
-      this.setState(target, () => {
-        target.status = 'count';
-        if (target.value === end) {
-          this.done();
-        } else {
-          onChange({ target });
-        }
-      });
+      const _value = value + step;
+      if (value === end) {
+        this.done();
+      } else {
+        this.change(_value, 'count');
+      }
     }, interval);
   }
 
   done() {
-    const { end, onChange } = this.props;
+    const { end } = this.props;
     clearInterval(this.timer);
-    onChange({ target: { value: end, status: 'done' } });
+    this.change(end, 'done');
+  }
+
+  change(inValue, inStatus) {
+    const { onChange } = this.props;
+    const target = { value: inValue };
+    this.setState(target, () => {
+      target.status = inStatus;
+      onChange({ target });
+    });
   }
 
   render() {
