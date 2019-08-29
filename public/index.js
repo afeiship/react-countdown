@@ -6,22 +6,22 @@ import './assets/style.scss';
 class App extends React.Component {
   state = {
     interval: 1000,
-    min: 5,
-    max: 1,
+    start: 5,
+    end: 1,
     step: -1,
     status: 'init'
   };
 
   render() {
-    const { interval, min, max, step, status } = this.state;
+    const { interval, start, end, step, status } = this.state;
     return (
       <div className="app-container">
         <p className="mod-label">{status}</p>
         <ReactCountdown
           className="react-countdown"
           interval={interval}
-          min={min}
-          max={max}
+          start={start}
+          end={end}
           step={step}
           onChange={(e) => {
             const { status, value } = e.target;
@@ -43,25 +43,25 @@ class App extends React.Component {
         </p>
 
         <p className="mod-form-control">
-          <label htmlFor="min">min</label>
+          <label htmlFor="start">start</label>
           <input
-            id="min"
+            id="start"
             className="mod-input"
-            value={min}
+            value={start}
             onChange={(e) => {
-              this.setState({ min: parseInt(e.target.value) });
+              this.setState({ start: parseInt(e.target.value) });
             }}
           />
         </p>
 
         <p className="mod-form-control">
-          <label htmlFor="max">max</label>
+          <label htmlFor="end">end</label>
           <input
-            id="max"
+            id="end"
             className="mod-input"
-            value={max}
+            value={end}
             onChange={(e) => {
-              this.setState({ max: parseInt(e.target.value) });
+              this.setState({ end: parseInt(e.target.value) });
             }}
           />
         </p>

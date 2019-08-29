@@ -10,14 +10,14 @@ const STATUS_LIST = ['init', 'pause', 'count', 'done'];
 
 export default class extends Component {
   static displayName = CLASS_NAME;
-  /*===properties min===*/
+  /*===properties start===*/
   static propTypes = {
     className: PropTypes.string,
     nodeName: PropTypes.any,
     virtual: PropTypes.bool,
     status: PropTypes.oneOf(STATUS_LIST),
-    min: PropTypes.number,
-    max: PropTypes.number,
+    start: PropTypes.number,
+    end: PropTypes.number,
     step: PropTypes.number,
     interval: PropTypes.number,
     onChange: PropTypes.func
@@ -26,8 +26,8 @@ export default class extends Component {
   static defaultProps = {
     nodeName: 'span',
     status: 'init',
-    min: 5,
-    max: 1,
+    start: 5,
+    end: 1,
     step: -1,
     interval: 1000,
     onChange: noop
@@ -39,8 +39,8 @@ export default class extends Component {
   }
 
   get boundary() {
-    const { step, max } = this.props;
-    return step + max;
+    const { step, end } = this.props;
+    return step + end;
   }
 
   get paused() {
@@ -50,7 +50,7 @@ export default class extends Component {
 
   constructor(inProps) {
     super(inProps);
-    this.state = { value: inProps.min };
+    this.state = { value: inProps.start };
     this.countdown = this.countdown.bind(this);
   }
 
@@ -68,8 +68,8 @@ export default class extends Component {
   }
 
   init() {
-    const { min } = this.props;
-    this.change(min, 'init');
+    const { start } = this.props;
+    this.change(start, 'init');
   }
 
   pause() {
@@ -90,11 +90,11 @@ export default class extends Component {
   }
 
   countdown() {
-    const { step, max } = this.props;
+    const { step, end } = this.props;
     if (this.paused) return;
     const value = this.value;
     const _value = value + step;
-    if (value <= max) {
+    if (value <= end) {
       this.done();
     } else {
       this.change(_value, 'count');
@@ -120,8 +120,8 @@ export default class extends Component {
       nodeName,
       virtual,
       status,
-      min,
-      max,
+      start,
+      end,
       step,
       interval,
       onChange,
