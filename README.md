@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://afeiship.github.io/react-countdown">
-    <img width="120" src="http://ww1.sinaimg.cn/large/006tNc79gy1g4qkx5knl7j303k03kjrk.jpg">
+    <img width="800" src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6gx4z36xqj30rs09dab9.jpg">
   </a>
 </p>
 
