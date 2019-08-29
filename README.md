@@ -22,24 +22,97 @@ npm install -S afeiship/react-countdown
   import './assets/style.scss';
 
   class App extends React.Component {
-    componentDidMount() {}
+    state = {
+      interval: 1000,
+      min: 5,
+      max: 1,
+      step: -1,
+      status: 'init'
+    };
+
     render() {
+      const { interval, min, max, step, status } = this.state;
       return (
         <div className="app-container">
+          <p className="mod-label">{status}</p>
           <ReactCountdown
+            className="react-countdown"
+            interval={interval}
+            min={min}
+            max={max}
+            step={step}
             onChange={(e) => {
               const { status, value } = e.target;
+              this.setState({ status });
               console.log('status,value:->', status, value);
             }}
-            status="count"
+            status={status}
           />
+          <p className="mod-form-control">
+            <label htmlFor="interval">Interval</label>
+            <input
+              id="interval"
+              className="mod-input"
+              value={interval}
+              onChange={(e) => {
+                this.setState({ interval: parseInt(e.target.value) });
+              }}
+            />
+          </p>
+
+          <p className="mod-form-control">
+            <label htmlFor="min">min</label>
+            <input
+              id="min"
+              className="mod-input"
+              value={min}
+              onChange={(e) => {
+                this.setState({ min: parseInt(e.target.value) });
+              }}
+            />
+          </p>
+
+          <p className="mod-form-control">
+            <label htmlFor="max">max</label>
+            <input
+              id="max"
+              className="mod-input"
+              value={max}
+              onChange={(e) => {
+                this.setState({ max: parseInt(e.target.value) });
+              }}
+            />
+          </p>
+          <p className="mod-form-control">
+            <label htmlFor="step">step</label>
+            <input
+              id="step"
+              className="mod-input"
+              value={step}
+              onChange={(e) => {
+                this.setState({ step: parseInt(e.target.value) });
+              }}
+            />
+          </p>
+          <button
+            disabled={status === 'count'}
+            onClick={() => {
+              this.setState({ status: 'count' });
+            }}>
+            START!
+          </button>
+          <button
+            onClick={() => {
+              this.setState({ status: 'pause' });
+            }}>
+            Pause!
+          </button>
         </div>
       );
     }
   }
 
   ReactDOM.render(<App />, document.getElementById('app'));
-
   ```
 
 ## documentation

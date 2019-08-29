@@ -10,21 +10,24 @@ const STATUS_LIST = ['init', 'pause', 'count', 'done'];
 
 export default class extends Component {
   static displayName = CLASS_NAME;
-  /*===properties start===*/
+  /*===properties min===*/
   static propTypes = {
     className: PropTypes.string,
+    nodeName: PropTypes.any,
+    virtual: PropTypes.bool,
     status: PropTypes.oneOf(STATUS_LIST),
-    start: PropTypes.number,
-    end: PropTypes.number,
+    min: PropTypes.number,
+    max: PropTypes.number,
     step: PropTypes.number,
     interval: PropTypes.number,
     onChange: PropTypes.func
   };
 
   static defaultProps = {
+    nodeName: 'span',
     status: 'init',
-    start: 5,
-    end: 1,
+    min: 5,
+    max: 1,
     step: -1,
     interval: 1000,
     onChange: noop
@@ -36,8 +39,8 @@ export default class extends Component {
   }
 
   get boundary() {
-    const { step, end } = this.props;
-    return step + end;
+    const { step, max } = this.props;
+    return step + max;
   }
 
   get paused() {
@@ -47,7 +50,7 @@ export default class extends Component {
 
   constructor(inProps) {
     super(inProps);
-    this.state = { value: inProps.start };
+    this.state = { value: inProps.min };
     this.countdown = this.countdown.bind(this);
   }
 
@@ -65,8 +68,8 @@ export default class extends Component {
   }
 
   init() {
-    const { start } = this.props;
-    this.change(start, 'init');
+    const { min } = this.props;
+    this.change(min, 'init');
   }
 
   pause() {
@@ -75,7 +78,7 @@ export default class extends Component {
 
   reset() {
     clearInterval(this.timer);
-    if (this.value === this.boundary) {
+    if (this.value <= this.boundary) {
       this.init();
     }
   }
@@ -87,11 +90,11 @@ export default class extends Component {
   }
 
   countdown() {
-    const { step, end } = this.props;
+    const { step, max } = this.props;
     if (this.paused) return;
     const value = this.value;
     const _value = value + step;
-    if (value === end) {
+    if (value <= max) {
       this.done();
     } else {
       this.change(_value, 'count');
@@ -114,20 +117,21 @@ export default class extends Component {
 
   render() {
     const {
-      className,
+      nodeName,
+      virtual,
       status,
-      start,
-      end,
+      min,
+      max,
       step,
       interval,
       onChange,
       ...props
     } = this.props;
     const { value } = this.state;
-    return (
-      <span className={classNames(CLASS_NAME, className)} {...props}>
-        {value}
-      </span>
-    );
+    const _nodeName = virtual ? React.Fragment : nodeName;
+    return React.createElement(_nodeName, {
+      children: value,
+      ...props
+    });
   }
 }
