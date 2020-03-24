@@ -6,30 +6,31 @@ import './assets/style.scss';
 class App extends React.Component {
   state = {
     interval: 1000,
-    start: 5,
+    value: 5,
     end: 1,
     step: -1,
-    status: 'init'
+    status: 'count'
   };
 
   render() {
-    const { interval, start, end, step, status } = this.state;
+    const { interval, value, end, step, status } = this.state;
     return (
       <div className="app-container">
         <p className="mod-label">{status}</p>
-        <ReactCountdown
-          className="react-countdown"
-          interval={interval}
-          start={start}
-          end={end}
-          step={step}
-          onChange={(e) => {
-            const { status, value } = e.target;
-            this.setState({ status });
-            console.log('status,value:->', status, value);
-          }}
-          status={status}
-        />
+        <span className="react-countdown">
+          <ReactCountdown
+            interval={interval}
+            value={value}
+            end={end}
+            step={step}
+            onChange={(e) => {
+              const { status, value } = e.target;
+              this.setState({ status, value });
+              console.log('status,value:->', status, value);
+            }}
+            status={status}
+          />
+        </span>
         <p className="mod-form-control">
           <label htmlFor="interval">Interval</label>
           <input
@@ -43,13 +44,13 @@ class App extends React.Component {
         </p>
 
         <p className="mod-form-control">
-          <label htmlFor="start">start</label>
+          <label htmlFor="value">value</label>
           <input
-            id="start"
+            id="value"
             className="mod-input"
-            value={start}
+            value={value}
             onChange={(e) => {
-              this.setState({ start: parseInt(e.target.value) });
+              this.setState({ value: parseInt(e.target.value) });
             }}
           />
         </p>
@@ -81,7 +82,7 @@ class App extends React.Component {
           onClick={() => {
             this.setState({ status: 'count' });
           }}>
-          START!
+          start!
         </button>
         <button
           onClick={() => {

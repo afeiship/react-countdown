@@ -1,38 +1,50 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import noop from 'noop';
-import objectAssign from 'object-assign';
+import noop from '@feizheng/noop';
 
 const CLASS_NAME = 'react-countdown';
 const STATUS_LIST = ['init', 'pause', 'count', 'done'];
 
-export default class extends Component {
+export default class ReactCountdown extends Component {
   static displayName = CLASS_NAME;
-  /*===properties start===*/
+  static version = '__VERSION__';
   static propTypes = {
-    className: PropTypes.string,
-    nodeName: PropTypes.any,
-    virtual: PropTypes.bool,
+    /**
+     * The counter status.
+     */
     status: PropTypes.oneOf(STATUS_LIST),
-    start: PropTypes.number,
+    /**
+     * The runtime value.
+     */
+    value: PropTypes.number,
+    /**
+     * The end number.
+     */
     end: PropTypes.number,
+    /**
+     * The steper.
+     */
     step: PropTypes.number,
+    /**
+     * Every interval'ms to count.
+     */
     interval: PropTypes.number,
+    /**
+     * When change will trigger.
+     */
     onChange: PropTypes.func
   };
 
   static defaultProps = {
-    nodeName: 'span',
     status: 'init',
-    start: 5,
+    value: 5,
     end: 1,
     step: -1,
     interval: 1000,
     onChange: noop
   };
-  /*===properties end===*/
 
   get value() {
     return this.state.value;
@@ -50,16 +62,21 @@ export default class extends Component {
 
   constructor(inProps) {
     super(inProps);
-    this.state = { value: inProps.start };
-    this.countdown = this.countdown.bind(this);
+    const { value } = inProps;
+    this.state = { value };
   }
 
-  componentWillReceiveProps(inNextProps) {
-    const { status } = inNextProps;
+  shouldComponentUpdate(inNextProps) {
+    const { status, value } = inNextProps;
     const _status = this.props.status;
+    const _value = this.state.value;
     if (status !== _status) {
       this[status]();
     }
+    if (value !== _value) {
+      this.setState({ value, status: 'init' });
+    }
+    return true;
   }
 
   componentDidMount() {
@@ -67,29 +84,29 @@ export default class extends Component {
     this[status]();
   }
 
-  init() {
-    const { start } = this.props;
-    this.change(start, 'init');
-  }
+  init = () => {
+    const { value } = this.props;
+    this.change(value, 'init');
+  };
 
-  pause() {
+  pause = () => {
     this.setState({ status: 'pause' });
-  }
+  };
 
-  reset() {
+  reset = () => {
     clearInterval(this.timer);
     if (this.value <= this.boundary) {
       this.init();
     }
-  }
+  };
 
-  count() {
+  count = () => {
     const { interval } = this.props;
     this.reset();
     this.timer = setInterval(this.countdown, interval);
-  }
+  };
 
-  countdown() {
+  countdown = () => {
     const { step, end } = this.props;
     if (this.paused) return;
     const value = this.value;
@@ -99,11 +116,12 @@ export default class extends Component {
     } else {
       this.change(_value, 'count');
     }
-  }
+  };
 
   done() {
+    const { end } = this.props;
     clearInterval(this.timer);
-    this.change(this.boundary, 'done');
+    this.change(end, 'done');
   }
 
   change(inValue, inStatus) {
@@ -117,20 +135,19 @@ export default class extends Component {
 
   render() {
     const {
-      nodeName,
       virtual,
       status,
-      start,
+      value,
       end,
       step,
       interval,
       onChange,
       ...props
     } = this.props;
-    const { value } = this.state;
-    const _nodeName = virtual ? React.Fragment : nodeName;
-    return React.createElement(_nodeName, {
-      children: value,
+    const _value = this.state.value;
+
+    return React.createElement(React.Fragment, {
+      children: _value,
       ...props
     });
   }

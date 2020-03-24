@@ -1,28 +1,38 @@
-<p align="center">
-  <a href="https://afeiship.github.io/react-countdown">
-    <img width="800" src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6gxab6eohj315u0e440k.jpg">
-  </a>
-</p>
-
 # react-countdown
 > Countdown component for react.
 
-## install
+## installation
 ```shell
-npm install -S afeiship/react-countdown
+npm install -S @feizheng/react-countdown
 ```
+
+## update
+```shell
+npm update @feizheng/react-countdown
+```
+
+## properties
+| Name     | Type   | Default | Description                 |
+| -------- | ------ | ------- | --------------------------- |
+| status   | enum   | 'init'  | The counter status.         |
+| value    | number | 5       | The runtime value.          |
+| end      | number | 1       | The end number.             |
+| step     | number | -1      | The steper.                 |
+| interval | number | 1000    | Every interval'ms to count. |
+| onChange | func   | noop    | When change will trigger.   |
+
 
 ## usage
 1. import css
   ```scss
-  @import "~react-countdown/style.scss";
+  @import "~@feizheng/react-countdown/dist/style.scss";
 
   // customize your styles:
   $react-countdown-options: ()
   ```
 2. import js
   ```js
-  import ReactCountdown from '../src/main';
+  import ReactCountdown from '@feizheng/react-countdown';
   import ReactDOM from 'react-dom';
   import React from 'react';
   import './assets/style.scss';
@@ -30,30 +40,31 @@ npm install -S afeiship/react-countdown
   class App extends React.Component {
     state = {
       interval: 1000,
-      min: 5,
-      max: 1,
+      value: 5,
+      end: 1,
       step: -1,
-      status: 'init'
+      status: 'count'
     };
 
     render() {
-      const { interval, min, max, step, status } = this.state;
+      const { interval, value, end, step, status } = this.state;
       return (
         <div className="app-container">
           <p className="mod-label">{status}</p>
-          <ReactCountdown
-            className="react-countdown"
-            interval={interval}
-            min={min}
-            max={max}
-            step={step}
-            onChange={(e) => {
-              const { status, value } = e.target;
-              this.setState({ status });
-              console.log('status,value:->', status, value);
-            }}
-            status={status}
-          />
+          <span className="react-countdown">
+            <ReactCountdown
+              interval={interval}
+              value={value}
+              end={end}
+              step={step}
+              onChange={(e) => {
+                const { status, value } = e.target;
+                this.setState({ status, value });
+                console.log('status,value:->', status, value);
+              }}
+              status={status}
+            />
+          </span>
           <p className="mod-form-control">
             <label htmlFor="interval">Interval</label>
             <input
@@ -67,25 +78,25 @@ npm install -S afeiship/react-countdown
           </p>
 
           <p className="mod-form-control">
-            <label htmlFor="min">min</label>
+            <label htmlFor="value">value</label>
             <input
-              id="min"
+              id="value"
               className="mod-input"
-              value={min}
+              value={value}
               onChange={(e) => {
-                this.setState({ min: parseInt(e.target.value) });
+                this.setState({ value: parseInt(e.target.value) });
               }}
             />
           </p>
 
           <p className="mod-form-control">
-            <label htmlFor="max">max</label>
+            <label htmlFor="end">end</label>
             <input
-              id="max"
+              id="end"
               className="mod-input"
-              value={max}
+              value={end}
               onChange={(e) => {
-                this.setState({ max: parseInt(e.target.value) });
+                this.setState({ end: parseInt(e.target.value) });
               }}
             />
           </p>
@@ -105,7 +116,7 @@ npm install -S afeiship/react-countdown
             onClick={() => {
               this.setState({ status: 'count' });
             }}>
-            START!
+            start!
           </button>
           <button
             onClick={() => {
@@ -119,6 +130,7 @@ npm install -S afeiship/react-countdown
   }
 
   ReactDOM.render(<App />, document.getElementById('app'));
+
   ```
 
 ## documentation
