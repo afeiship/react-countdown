@@ -6,6 +6,7 @@ import noop from '@feizheng/noop';
 
 const CLASS_NAME = 'react-countdown';
 const STATUS_LIST = ['init', 'pause', 'count', 'done'];
+const DEFALUT_TRANSFORM = (value) => value;
 
 export default class ReactCountdown extends Component {
   static displayName = CLASS_NAME;
@@ -28,6 +29,10 @@ export default class ReactCountdown extends Component {
      */
     step: PropTypes.number,
     /**
+     * When value get, transform to another value you want.
+     */
+    transform: PropTypes.func,
+    /**
      * Every interval'ms to count.
      */
     interval: PropTypes.number,
@@ -43,7 +48,8 @@ export default class ReactCountdown extends Component {
     end: 1,
     step: -1,
     interval: 1000,
-    onChange: noop
+    onChange: noop,
+    transform: DEFALUT_TRANSFORM
   };
 
   get reversed() {
@@ -152,12 +158,13 @@ export default class ReactCountdown extends Component {
       step,
       interval,
       onChange,
+      transform,
       ...props
     } = this.props;
     const _value = this.state.value;
 
     return React.createElement(React.Fragment, {
-      children: _value,
+      children: transform(_value),
       ...props
     });
   }

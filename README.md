@@ -12,14 +12,15 @@ npm update @feizheng/react-countdown
 ```
 
 ## properties
-| Name     | Type   | Default | Description                 |
-| -------- | ------ | ------- | --------------------------- |
-| status   | enum   | 'init'  | The counter status.         |
-| value    | number | 5       | The runtime value.          |
-| end      | number | 1       | The end number.             |
-| step     | number | -1      | The steper.                 |
-| interval | number | 1000    | Every interval'ms to count. |
-| onChange | func   | noop    | When change will trigger.   |
+| Name      | Type   | Default          | Description                                          |
+| --------- | ------ | ---------------- | ---------------------------------------------------- |
+| status    | enum   | 'init'           | The counter status.                                  |
+| value     | number | 5                | The runtime value.                                   |
+| end       | number | 1                | The end number.                                      |
+| step      | number | -1               | The steper.                                          |
+| transform | func   | (value) => value | When value get, transform to another value you want. |
+| interval  | number | 1000             | Every interval'ms to count.                          |
+| onChange  | func   | noop             | When change will trigger.                            |
 
 
 ## usage
@@ -57,6 +58,9 @@ npm update @feizheng/react-countdown
               value={value}
               end={end}
               step={step}
+              transform={(v) => {
+                return `${v}s`;
+              }}
               onChange={(e) => {
                 const { status, value } = e.target;
                 this.setState({ status, value });

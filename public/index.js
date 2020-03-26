@@ -23,6 +23,9 @@ class App extends React.Component {
             value={value}
             end={end}
             step={step}
+            transform={(v) => {
+              return `${v}s`;
+            }}
             onChange={(e) => {
               const { status, value } = e.target;
               this.setState({ status, value });
