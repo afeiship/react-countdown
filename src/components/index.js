@@ -46,6 +46,10 @@ export default class ReactCountdown extends Component {
     onChange: noop
   };
 
+  get reversed() {
+    return this.props.step > 0;
+  }
+
   get value() {
     return this.state.value;
   }
@@ -95,8 +99,14 @@ export default class ReactCountdown extends Component {
 
   reset = () => {
     clearInterval(this.timer);
-    if (this.value <= this.boundary) {
-      this.init();
+    if (!this.reversed) {
+      if (this.value <= this.boundary) {
+        this.init();
+      }
+    } else {
+      if (this.value >= this.boundary) {
+        this.init();
+      }
     }
   };
 
@@ -111,10 +121,10 @@ export default class ReactCountdown extends Component {
     if (this.paused) return;
     const value = this.value;
     const _value = value + step;
-    if (value <= end) {
-      this.done();
+    if (!this.reversed) {
+      value <= end ? this.done() : this.change(_value, 'count');
     } else {
-      this.change(_value, 'count');
+      value >= end ? this.done() : this.change(_value, 'count');
     }
   };
 
