@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import noop from '@feizheng/noop';
+import noop from '@jswork/noop';
 
 const CLASS_NAME = 'react-countdown';
 const STATUS_LIST = ['init', 'pause', 'count', 'done'];
@@ -169,3 +167,4 @@ export default class ReactCountdown extends Component {
     });
   }
 }
+

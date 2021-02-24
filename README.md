@@ -1,41 +1,45 @@
 # react-countdown
 > Countdown component for react.
 
+[![version][version-image]][version-url]
+[![license][license-image]][license-url]
+[![size][size-image]][size-url]
+[![download][download-image]][download-url]
+
 ## installation
 ```shell
-npm install -S @feizheng/react-countdown
-```
-
-## update
-```shell
-npm update @feizheng/react-countdown
+npm install -S @jswork/react-countdown
 ```
 
 ## properties
-| Name      | Type   | Default          | Description                                          |
-| --------- | ------ | ---------------- | ---------------------------------------------------- |
-| status    | enum   | 'init'           | The counter status.                                  |
-| value     | number | 5                | The runtime value.                                   |
-| end       | number | 1                | The end number.                                      |
-| step      | number | -1               | The steper.                                          |
-| transform | func   | (value) => value | When value get, transform to another value you want. |
-| interval  | number | 1000             | Every interval'ms to count.                          |
-| onChange  | func   | noop             | When change will trigger.                            |
+| Name      | Type   | Required | Default          | Description                                          |
+| --------- | ------ | -------- | ---------------- | ---------------------------------------------------- |
+| status    | enum   | false    | 'init'           | The counter status.                                  |
+| value     | number | false    | 5                | The runtime value.                                   |
+| end       | number | false    | 1                | The end number.                                      |
+| step      | number | false    | -1               | The steper.                                          |
+| transform | func   | false    | (value) => value | When value get, transform to another value you want. |
+| interval  | number | false    | 1000             | Every interval'ms to count.                          |
+| onChange  | func   | false    | noop             | When change will trigger.                            |
 
 
 ## usage
 1. import css
   ```scss
-  @import "~@feizheng/react-countdown/dist/style.scss";
+  @import "~@jswork/react-countdown/dist/style.css";
+
+  // or use sass
+  @import "~@jswork/react-countdown/dist/style.scss";
 
   // customize your styles:
   $react-countdown-options: ()
   ```
 2. import js
   ```js
-  import ReactCountdown from '@feizheng/react-countdown';
-  import ReactDOM from 'react-dom';
+  import ReactDemokit from '@jswork/react-demokit';
   import React from 'react';
+  import ReactDOM from 'react-dom';
+  import ReactCountdown from '@jswork/react-countdown';
   import './assets/style.scss';
 
   class App extends React.Component {
@@ -50,7 +54,9 @@ npm update @feizheng/react-countdown
     render() {
       const { interval, value, end, step, status } = this.state;
       return (
-        <div className="app-container">
+        <ReactDemokit
+          className="p-3 app-container"
+          url="https://github.com/afeiship/react-countdown">
           <p className="mod-label">{status}</p>
           <span className="react-countdown">
             <ReactCountdown
@@ -113,20 +119,24 @@ npm update @feizheng/react-countdown
               }}
             />
           </p>
-          <button
-            disabled={status === 'count'}
-            onClick={() => {
-              this.setState({ status: 'count' });
-            }}>
-            start!
-          </button>
-          <button
-            onClick={() => {
-              this.setState({ status: 'pause' });
-            }}>
-            Pause!
-          </button>
-        </div>
+          <div className="actions mt-2">
+            <button
+              className="button is-primary mr-2"
+              disabled={status === 'count'}
+              onClick={() => {
+                this.setState({ status: 'count' });
+              }}>
+              start!
+            </button>
+            <button
+              className="button is-danger"
+              onClick={() => {
+                this.setState({ status: 'pause' });
+              }}>
+              Pause!
+            </button>
+          </div>
+        </ReactDemokit>
       );
     }
   }
@@ -137,3 +147,19 @@ npm update @feizheng/react-countdown
 
 ## documentation
 - https://afeiship.github.io/react-countdown/
+
+
+## license
+Code released under [the MIT license](https://github.com/afeiship/react-countdown/blob/master/LICENSE.txt).
+
+[version-image]: https://img.shields.io/npm/v/@jswork/react-countdown
+[version-url]: https://npmjs.org/package/@jswork/react-countdown
+
+[license-image]: https://img.shields.io/npm/l/@jswork/react-countdown
+[license-url]: https://github.com/afeiship/react-countdown/blob/master/LICENSE.txt
+
+[size-image]: https://img.shields.io/bundlephobia/minzip/@jswork/react-countdown
+[size-url]: https://github.com/afeiship/react-countdown/blob/master/dist/react-countdown.min.js
+
+[download-image]: https://img.shields.io/npm/dm/@jswork/react-countdown
+[download-url]: https://www.npmjs.com/package/@jswork/react-countdown

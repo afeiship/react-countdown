@@ -1,6 +1,7 @@
-import ReactCountdown from '../src/main';
-import ReactDOM from 'react-dom';
+import ReactDemokit from '@jswork/react-demokit';
 import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactCountdown from '../src/main';
 import './assets/style.scss';
 
 class App extends React.Component {
@@ -15,7 +16,9 @@ class App extends React.Component {
   render() {
     const { interval, value, end, step, status } = this.state;
     return (
-      <div className="app-container">
+      <ReactDemokit
+        className="p-3 app-container"
+        url="https://github.com/afeiship/react-countdown">
         <p className="mod-label">{status}</p>
         <span className="react-countdown">
           <ReactCountdown
@@ -78,20 +81,24 @@ class App extends React.Component {
             }}
           />
         </p>
-        <button
-          disabled={status === 'count'}
-          onClick={() => {
-            this.setState({ status: 'count' });
-          }}>
-          start!
-        </button>
-        <button
-          onClick={() => {
-            this.setState({ status: 'pause' });
-          }}>
-          Pause!
-        </button>
-      </div>
+        <div className="actions mt-2">
+          <button
+            className="button is-primary mr-2"
+            disabled={status === 'count'}
+            onClick={() => {
+              this.setState({ status: 'count' });
+            }}>
+            start!
+          </button>
+          <button
+            className="button is-danger"
+            onClick={() => {
+              this.setState({ status: 'pause' });
+            }}>
+            Pause!
+          </button>
+        </div>
+      </ReactDemokit>
     );
   }
 }
